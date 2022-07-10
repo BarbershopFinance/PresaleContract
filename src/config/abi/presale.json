@@ -3,7 +3,7 @@
         "inputs": [
             {
                 "internalType": "address",
-                "name": "_SAP",
+                "name": "_WOOD",
                 "type": "address"
             },
             {
@@ -87,7 +87,7 @@
     },
     {
         "inputs": [],
-        "name": "SAP",
+        "name": "WOOD",
         "outputs": [
             {
                 "internalType": "contract IBEP20",
@@ -133,7 +133,7 @@
     },
     {
         "inputs": [],
-        "name": "getSAPTokensLeft",
+        "name": "getWOODTokensLeft",
         "outputs": [
             {
                 "internalType": "uint256",
@@ -364,7 +364,7 @@
     },
     {
         "inputs": [],
-        "name": "withdrawAllSAP",
+        "name": "withdrawAllWOOD",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -378,7 +378,7 @@
     },
     {
         "inputs": [],
-        "name": "withdrawUnsoldSAP",
+        "name": "withdrawUnsoldWOOD",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"

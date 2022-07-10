@@ -13,18 +13,9 @@ import PageLoader from './components/PageLoader'
 import NftGlobalNotification from './views/Nft/components/NftGlobalNotification'
 import GlobalStyle from './style/Global'
 
-// Route-based code splitting
-// Only pool is included in the main bundle because of it's the most visited page'
-const Home = lazy(() => import('./views/Home'))
-const Farms = lazy(() => import('./views/Farms'))
 const Presale = lazy(() => import('./views/Presale'))
 const PublicPresale = lazy(() => import('./views/publicPresale'))
-const Team = lazy(() => import('./views/Team'))
-// const Lottery = lazy(() => import('./views/Lottery'))
-const Pools = lazy(() => import('./views/Pools'))
-// const Ifos = lazy(() => import('./views/Ifos'))
 const NotFound = lazy(() => import('./views/NotFound'))
-// const Nft = lazy(() => import('./views/Nft'))
 
 let didAskToJoinTelegram = false
 

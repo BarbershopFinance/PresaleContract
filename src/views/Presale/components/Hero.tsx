@@ -4,6 +4,7 @@ import { Heading, Text } from '@pancakeswap-libs/uikit'
 import useI18n from 'hooks/useI18n'
 import Container from 'components/layout/Container'
 
+
 const Title = styled(Heading).attrs({ as: 'h1', size: 'xl' })`
   color: 'white';
   margin-bottom: 24px;
@@ -61,14 +62,12 @@ const Hero = () => {
 
   return (
     <StyledHero>
-      <StyledContainer>
-        {/* <Title>{TranslateString(20000, 'PreSale')}</Title> */}
-        {/* <Blurb>{TranslateString(999, `Share the referral link below to invite your friends and earn 3% of your friends' earnings FOREVER!`)}</Blurb> */}
-      </StyledContainer>
       <StyledText>
-        <Heading color='#000'>
-        Sapphire token is at the heart of the Sapphire defi ecosystem.
-        <br /> Buy it, spend it, stake it... heck, you can even vote with it!
+        <Heading color='#fff' style={{ fontFamily: 'Custom-1', fontSize: 84, textAlign: 'center'}}>
+        ROARING LION
+        </Heading>
+        <Heading color='#fff' style={{ fontFamily: 'Custom-1', fontSize: 48, textAlign: 'center'}}>
+        The first True Toxic Deer fork
         </Heading>
       </StyledText>      
     </StyledHero>

@@ -9,7 +9,7 @@ import { IfoStatus } from 'config/constants/types'
 import UnlockButton from 'components/UnlockButton'
 import { usePreSaleApprove } from 'hooks/useApprove'
 import { usePreSaleAllowance } from 'hooks/useAllowance'
-import { getBalanceNumber } from 'utils/formatBalance'
+import { getBalanceNumber, getBalance } from 'utils/formatBalance'
 import useI18n from 'hooks/useI18n'
 import CardValue from 'views/Home/components/CardValue'
 import Spacer from 'components/Spacer'
@@ -24,6 +24,7 @@ const StyledPreSaleCard = styled(Card)`
   width: 100%;
   border-radius: 16px;
   margin-top: 16px;
+  boxShadow: inset 0 5px 9px -5px hsl(0deg 0% 100% / 70%), inset 0 28px 38px -4px hsl(0deg 0% 100% / 20%), inset 0 4px 40px rgb(37 27 11 / 25%), inset 0 4px 20px rgb(37 27 11 / 25%);
   ${({ theme }) => theme.mediaQueries.sm} {
     padding: 32px 16px 16px;
     margin-left: auto;
@@ -89,12 +90,14 @@ const PresaleContribute: React.FC<Props> = ({
     const fetchV = async () => {
       const _claimed = await contract.methods.claimActive().call()
       const _active = await contract.methods.saleActive().call()
-      const _total = await contract.methods.getSAPTokensLeft().call()
+      const _total = await contract.methods.getWOODTokensLeft().call()
       
       const _totalSoldToken = await contract.methods.getTotalTokensSold().call()
-      console.log('debug->_total', _totalSoldToken)
+      console.log('debug->_totalSoldToken', _totalSoldToken)
+      console.log('debug->_total', _total/1e18)
 
-      const _leftToken = new BigNumber(_total).minus(new BigNumber(_totalSoldToken))
+      const _leftToken = new BigNumber(_total/1e18).minus(_totalSoldToken)
+      console.log('debug->_leftToken', _leftToken.toString())
       setClaimed(_claimed)
       setActive(_active)
       setLeftToken(_leftToken)
@@ -107,14 +110,13 @@ const PresaleContribute: React.FC<Props> = ({
 
       const _claimed = await contract.methods.claimActive().call()
       const _amount = await contract.methods.getTokensOwned(account).call()
-
       const _active = await contract.methods.saleActive().call()
-      const _total = await contract.methods.getSAPTokensLeft().call()
+      const _total = await contract.methods.getWOODTokensLeft().call()
 
       const _unclaimToken = await contract.methods.getTokensUnclaimed(account).call()
       const _ownToken = await contract.methods.getTokensOwned(account).call()
       const _totalSoldToken = await contract.methods.getTotalTokensSold().call()
-      const _leftToken = new BigNumber(_total).minus(new BigNumber(_totalSoldToken))
+      const _leftToken = new BigNumber(_total/1e18).minus(new BigNumber(_totalSoldToken))
 
       console.log('debug->_total', _leftToken, _ownToken, _totalSoldToken, _total)
 
@@ -184,14 +186,14 @@ const PresaleContribute: React.FC<Props> = ({
             <LabelButton
               disabled={pendingTx || !(isActive || isFinished)}
               buttonLabel="Contribute"
-              label={isFinished ? 'Your tokens to claim' : `Your contribution (SAP)`}
+              label={isFinished ? 'Your tokens to claim' : `Your contribution (WOOD)`}
               value={
                 // eslint-disable-next-line no-nested-ternary
                 isFinished
                   ? claimed
                     ? 'Claimed'
-                    : getBalanceNumber(claimTokenBalance, tokenDecimals).toFixed(4)
-                  : getBalanceNumber(new BigNumber(amount).times(1)).toFixed(4)
+                    : getBalance(claimTokenBalance).toFixed(2)
+                  : getBalance(new BigNumber(amount).times(1)).toFixed(2)
               }
               onClick={onPresentContributeModal}
             />
@@ -208,14 +210,14 @@ const PresaleContribute: React.FC<Props> = ({
             <LabelButton
               disabled={pendingTx || unclaimToken <= new BigNumber(0) || !(isActive || isFinished)}
               buttonLabel="Claim"
-              label="Your tokens to claim (SAP)"
+              label="Your tokens to claim (WOOD)"
               value={
                 // eslint-disable-next-line no-nested-ternary
                 isFinished
                   ? claimed
                     ? 'Claimed'
-                    : getBalanceNumber(unclaimToken, tokenDecimals).toFixed(4)
-                  : getBalanceNumber(new BigNumber(unclaimToken)).toFixed(4)
+                    : getBalance(unclaimToken).toFixed(2)
+                  : getBalance(new BigNumber(unclaimToken)).toFixed(2)
               }
               onClick={claim}
             />
@@ -229,28 +231,28 @@ const PresaleContribute: React.FC<Props> = ({
           </Heading>
           <hr />
           <RowItem>
-            <Text color="#ddd" mr="16px">Purchased SAP:</Text>
-            <CardValue value={getBalanceNumber(ownToken, 9)} decimals={0} fontSize="16px"/>
+            <Text color="#ddd" mr="16px">Purchased WOOD:</Text>
+            <CardValue value={getBalance(ownToken)} decimals={0} fontSize="16px"/>
           </RowItem>
           <RowItem>
-            <Text color="#ddd" mr="16px">Unclaimed SAP:</Text>
-            <CardValue value={getBalanceNumber(unclaimToken, 9)} decimals={0} fontSize="16px" />
+            <Text color="#ddd" mr="16px">Unclaimed WOOD:</Text>
+            <CardValue value={getBalance(unclaimToken)} decimals={0} fontSize="16px" />
           </RowItem>
           <hr />
           <RowItem>
-            <Text color="#ddd" mr="16px">Total SAP:</Text>
-            <CardValue value={getBalanceNumber(total, 9)} decimals={0} fontSize="16px" />
+            <Text color="#ddd" mr="16px">Total WOOD:</Text>
+            <CardValue value={getBalanceNumber(total, 18)} decimals={0} fontSize="16px" />
           </RowItem>
           <RowItem>
-            <Text color="#ddd" mr="16px">Total SAP Sold:</Text>
-            <CardValue value={getBalanceNumber(totalSoldToken, 9)} decimals={0} fontSize="16px" />
+            <Text color="#ddd" mr="16px">Total WOOD Sold:</Text>
+            <CardValue value={getBalance(totalSoldToken)} decimals={0} fontSize="16px" />
           </RowItem>
           <hr />
           <RowItem>
             <Text color="#ddd" mr="16px">
-              SAP Left:
+              WOOD Left:
             </Text>
-            <CardValue value={getBalanceNumber(leftToken, 9)} decimals={0} fontSize="18px" />
+            <CardValue value={getBalance(leftToken)} decimals={0} fontSize="18px" />
           </RowItem>
         </StyledPreSaleCard>
         <Spacer size="sm" />
@@ -260,30 +262,36 @@ const PresaleContribute: React.FC<Props> = ({
           </Heading>
           <RowItem>
             <Text color="#ddd" fontSize="18px" mr="16px">
-              - SAP Presale Price:{' '}
+              WOOD Presale Price:{' '}
+            </Text>
+            <CardValue fontSize="18px" value={1} decimals={2} prefix="$" />
+          </RowItem>
+          {/* <RowItem>
+            <Text color="#ddd" fontSize="18px" mr="16px">
+              - WOOD Presale Price:{' '}
             </Text>
             <CardValue fontSize="18px" value={7} decimals={2} prefix="$" />
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="18px" mr="16px">
-              - SAP Launch Price:{' '}
+              - WOOD Launch Price:{' '}
             </Text>
             <CardValue fontSize="18px" value={10} decimals={2} prefix="$" />
-          </RowItem>
+          </RowItem> */}
 
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - Minimum Contribution - 7 BUSD (1 SAP)
+              - Minimum Contribution - 1 BUSD (1 WOOD)
             </Text>
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - Maximum Contribution - 7000 BUSD (1000 SAP)
+              - Maximum Contribution - 100,000 BUSD (100,000 WOOD)
             </Text>
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - HardCap - 500000 BUSD (70000 SAP)
+              - HardCap - 500,000 BUSD (500,000 WOOD)
             </Text>
           </RowItem>
         </StyledPreSaleCard>

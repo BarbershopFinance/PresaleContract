@@ -21,15 +21,15 @@ const ThemeContextProvider = ({ children }) => {
 
   // customize light theme
   const light: PancakeTheme = lightBase
-  light.card.background = '#083ad1'
+  light.card.background = '#251b0b'
   light.colors.background = '#FF914D'
-  light.modal.background = '#1c1c1b'
+  light.modal.background = 'rgba(242, 203, 138)'
   light.colors.primary = '#111'
   light.colors.primaryBright = '#FF914D'
   light.colors.secondary = '#FF914D'
   light.colors.tertiary = '#FF914D'
-  light.button.primary.background = '#6cd1ff'
-  light.button.primary.backgroundHover = '#6cd1ff'
+  light.button.primary.background = 'rgba(242, 203, 138, 0.8)'
+  light.button.primary.backgroundHover = 'rgba(242, 203, 138, 0.8)'
 
   // customize dark theme
   const dark: PancakeTheme = darkBase

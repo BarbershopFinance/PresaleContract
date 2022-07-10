@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'Custom-1';
+    src: url('./fonts/Beast.otf');
+  }
+  
+  @font-face {
+    font-family: 'Custom-2';
+    src: url('./fonts/Zoonaji.ttf');
+  }
+  
+  @font-face {
+    font-family: 'Custom-3';
+    src: url('./fonts/Woodpecker.ttf');
+  }
+
+  div {
+    font-family: 'Custom-2';
+  }
+  
+  h2 {
+    font-family: 'Custom-3';
+  }

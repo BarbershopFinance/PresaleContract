@@ -749,7 +749,7 @@ library SafeBEP20 {
 
 pragma solidity 0.6.12;
 
-contract SAPPresale is ReentrancyGuard {
+contract WOODPresale is ReentrancyGuard {
 	using SafeMath for uint256;
 	using SafeBEP20 for IBEP20;
 	// Maps user to the number of tokens owned
@@ -757,8 +757,8 @@ contract SAPPresale is ReentrancyGuard {
 	// The number of unclaimed tokens the user has
 	mapping(address => uint256) public tokensUnclaimed;
 
-	// SAP token
-	IBEP20 public SAP;
+	// WOOD token
+	IBEP20 public WOOD;
 	// BUSD token
 	IBEP20 public BUSD;
 
@@ -766,9 +766,9 @@ contract SAPPresale is ReentrancyGuard {
 	bool isSaleActive;
 	// Claim active
 	bool isClaimActive;
-	// Total SAP sold
+	// Total WOOD sold
 	uint256 totalTokensSold = 0;
-	// Price of presale SAP, 2 BUSD
+	// Price of presale WOOD, 2 BUSD
 	uint256 BUSDPerToken = 7 * 10 ** 9;
 	// Amount of BUSD received in presale
 	uint256 busdReceived = 0;
@@ -782,10 +782,10 @@ contract SAPPresale is ReentrancyGuard {
 	event TokenClaim(address user, uint256 tokens);
 
 	constructor(
-		address _SAP,
+		address _WOOD,
 		address _BUSD
 	) public {
-		SAP = IBEP20(_SAP);
+		WOOD = IBEP20(_WOOD);
 		BUSD = IBEP20(_BUSD);
 		isSaleActive;
 		// owner = msg.sender;
@@ -849,19 +849,19 @@ contract SAPPresale is ReentrancyGuard {
 		return tokensUnclaimed[_user];
 	}
 
-	function getSAPTokensLeft() external view returns (uint256) {
-		return SAP.balanceOf(address(this));
+	function getWOODTokensLeft() external view returns (uint256) {
+		return WOOD.balanceOf(address(this));
 	}
 
 	function claimTokens() external nonReentrant {
 		require(isClaimActive, "Claim is not allowed yet");
-		require(tokensOwned[msg.sender] > 0, "User should own some SAP tokens");
-		require(tokensUnclaimed[msg.sender] > 0, "User should have unclaimed SAP tokens");
-		require(SAP.balanceOf(address(this)) >= tokensUnclaimed[msg.sender], "There are not enough SAP tokens to transfer.");
+		require(tokensOwned[msg.sender] > 0, "User should own some WOOD tokens");
+		require(tokensUnclaimed[msg.sender] > 0, "User should have unclaimed WOOD tokens");
+		require(WOOD.balanceOf(address(this)) >= tokensUnclaimed[msg.sender], "There are not enough WOOD tokens to transfer.");
 
 		uint256 callerTokensUnclaimed = tokensUnclaimed[msg.sender];
 		tokensUnclaimed[msg.sender] = 0;
-		SAP.safeTransfer(msg.sender, callerTokensUnclaimed);
+		WOOD.safeTransfer(msg.sender, callerTokensUnclaimed);
 		emit TokenClaim(msg.sender, callerTokensUnclaimed);
 	}
 
@@ -869,13 +869,13 @@ contract SAPPresale is ReentrancyGuard {
 		BUSD.safeTransfer(msg.sender, BUSD.balanceOf(address(this)));
 	}
 
-	function withdrawUnsoldSAP() external onlyOwner {
-		uint256 amount = SAP.balanceOf(address(this)) - totalTokensSold;
-		SAP.safeTransfer(msg.sender, amount);
+	function withdrawUnsoldWOOD() external onlyOwner {
+		uint256 amount = WOOD.balanceOf(address(this)) - totalTokensSold;
+		WOOD.safeTransfer(msg.sender, amount);
 	}
 
-	function withdrawAllSAP() external onlyOwner {
-		SAP.safeTransfer(msg.sender, SAP.balanceOf(address(this)));
+	function withdrawAllWOOD() external onlyOwner {
+		WOOD.safeTransfer(msg.sender, WOOD.balanceOf(address(this)));
 	}
     
 }
