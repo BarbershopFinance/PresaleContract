@@ -19,9 +19,9 @@ const useStake = (pid: number) => {
         const txHash = await stake(masterChefContract, pid, amount, account, decimals)
         dispatch(fetchFarmUserDataAsync(account))
         console.info(txHash)
-        toastSuccess("Success","Staking transaction confirmed")
+        toastSuccess('Success', 'Staking transaction confirmed')
       } catch (e) {
-        toastError("An error occurred.", `Transaction unsuccessful, please try again`);
+        toastError('An error occurred.', `Transaction unsuccessful, please try again`)
       }
     },
     [account, dispatch, masterChefContract, pid, toastSuccess, toastError],

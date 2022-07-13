@@ -29,7 +29,9 @@ const ContributeModal: React.FC<Props> = ({ currency, contract, currencyAddress,
         onSelectMax={() => setValue(balance.toString())}
       />
       <Flex justifyContent="space-between" mb="24px">
-        <Button fullWidth variant="secondary" onClick={onDismiss} mr="8px">
+        <Button fullWidth variant="secondary" onClick={onDismiss} mr="8px"
+        style={{color: 'white !important', backgroundColor: 'brown !important'}}
+        >
           Cancel
         </Button>
         <Button

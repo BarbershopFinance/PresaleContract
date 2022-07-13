@@ -154,7 +154,7 @@ const PresaleContribute: React.FC<Props> = ({
   return (
     <>
       {!isActive && (
-        <Heading color="#000" size="lg" style={{ textAlign: 'center' }}>
+        <Heading color="#fff" size="lg" style={{ textAlign: 'center' }}>
           Presale is not active
         </Heading>
       )}

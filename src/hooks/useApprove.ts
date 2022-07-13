@@ -19,10 +19,10 @@ export const useApprove = (lpContract: Contract) => {
     try {
       const tx = await approve(lpContract, masterChefContract, account)
       dispatch(fetchFarmUserDataAsync(account))
-      toastSuccess("Success", `Got approval!`);
+      toastSuccess('Success', `Got approval!`)
       return tx
     } catch (e) {
-      toastError("An error occurred.", `Did not get approval, please try again`);
+      toastError('An error occurred.', `Did not get approval, please try again`)
       return false
     }
   }, [account, dispatch, lpContract, masterChefContract, toastError, toastSuccess])

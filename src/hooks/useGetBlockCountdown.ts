@@ -12,7 +12,7 @@ const useBlockCountdown = (blockNumber: number) => {
   useEffect(() => {
     const startCountdown = async () => {
       const web3 = getWeb3()
-      
+
       const currentBlock = await web3.eth.getBlockNumber()
 
       if (blockNumber > currentBlock) {

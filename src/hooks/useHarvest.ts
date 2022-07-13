@@ -13,15 +13,15 @@ export const useHarvest = (farmPid: number) => {
   const { toastError, toastSuccess } = useToast()
 
   const handleHarvest = useCallback(async () => {
-    try{
+    try {
       const txHash = await harvest(masterChefContract, farmPid, account)
       dispatch(fetchFarmUserDataAsync(account))
-      toastSuccess("Success","Harvesting transaction confirmed")
+      toastSuccess('Success', 'Harvesting transaction confirmed')
       return txHash
-  } catch (e) {
-    toastError("An error occurred.", `Harvesting unsuccessful, please try again`);
-    return false;
-  }
+    } catch (e) {
+      toastError('An error occurred.', `Harvesting unsuccessful, please try again`)
+      return false
+    }
   }, [account, dispatch, farmPid, masterChefContract, toastError, toastSuccess])
 
   return { onReward: handleHarvest }
@@ -30,7 +30,7 @@ export const useHarvest = (farmPid: number) => {
 export const useAllHarvest = (farmPids: number[]) => {
   const { account } = useWallet()
   const masterChefContract = useMasterchef()
-  
+
   const handleHarvest = useCallback(async () => {
     const harvestPromises = farmPids.reduce((accum, pid) => {
       return [...accum, harvest(masterChefContract, pid, account)]

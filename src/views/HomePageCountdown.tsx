@@ -45,13 +45,12 @@ const getTimeHours = (time) => ((time % daySeconds) / hourSeconds) | 0
 // eslint-disable-next-line no-bitwise
 const getTimeDays = (time) => (time / daySeconds) | 0
 
-
 function secondsToDhms(sec) {
-    const days = Math.floor(sec / (3600*24));
-    const hours = Math.floor(sec % (3600*24) / 3600);
-    const minutes = Math.floor(sec % 3600 / 60);
-    const seconds = Math.floor(sec % 60);
-    return {days, hours, minutes, seconds};
+  const days = Math.floor(sec / (3600 * 24))
+  const hours = Math.floor((sec % (3600 * 24)) / 3600)
+  const minutes = Math.floor((sec % 3600) / 60)
+  const seconds = Math.floor(sec % 60)
+  return { days, hours, minutes, seconds }
 }
 const TimerBox = styled.div`
   display: flex;
@@ -59,7 +58,7 @@ const TimerBox = styled.div`
   align: center;
   font-family: sans-serif;
   text-align: center;
-  margin-top:50px;
+  margin-top: 50px;
 `
 
 const Layout = styled(BaseLayout)`
@@ -88,64 +87,63 @@ const Layout = styled(BaseLayout)`
 // END BLOCK: 18751269
 
 // const BEGIN_TIME = 1627887161; // Monday, August 2, 2021 4:00:00 PM GMT
-const BEGIN_TIME = 1638201600; // Monday, August 2, 2021 4:00:00 PM GMT
-const HomePageCountdown =() => {
-    // const currentBlock = useBlock();
-    const tarBlock = 15751269
-    const startTime = Date.now() / 1000
-    const remainingTime = (BEGIN_TIME - startTime);
-    const days = Math.ceil(remainingTime / daySeconds)
+const BEGIN_TIME = 1638201600 // Monday, August 2, 2021 4:00:00 PM GMT
+const HomePageCountdown = () => {
+  // const currentBlock = useBlock();
+  const tarBlock = 15751269
+  const startTime = Date.now() / 1000
+  const remainingTime = BEGIN_TIME - startTime
+  const days = Math.ceil(remainingTime / daySeconds)
 
-    const daysDuration = days * daySeconds
-    return (
-      <StyledTimerCard>
-        <CardBody>
-          <Heading size="lg" mb="24px">
-            Presale Staring
-          </Heading>
-          <TimerBox>
-        <Layout>
-          <CountdownCircleTimer
-            {...timerProps}
-            colors="#ffd000"
-            duration={daysDuration}
-            initialRemainingTime={remainingTime}
-          >
-            {({ elapsedTime }) => renderTime('days', getTimeDays(daysDuration - elapsedTime))}
-          </CountdownCircleTimer>
-          <CountdownCircleTimer
-            {...timerProps}
-            colors="#ffd000"
-            duration={daySeconds}
-            initialRemainingTime={remainingTime % daySeconds}
-            onComplete={(totalElapsedTime) => [remainingTime - totalElapsedTime > hourSeconds, 10]}
-          >
-            {({ elapsedTime }) => renderTime('hours', getTimeHours(daySeconds - elapsedTime))}
-          </CountdownCircleTimer>
-          <CountdownCircleTimer
-            {...timerProps}
-            colors="#ffd000"
-            duration={hourSeconds}
-            initialRemainingTime={remainingTime % hourSeconds}
-            onComplete={(totalElapsedTime) => [remainingTime - totalElapsedTime > minuteSeconds, 10]}
-          >
-            {({ elapsedTime }) => renderTime('minutes', getTimeMinutes(hourSeconds - elapsedTime))}
-          </CountdownCircleTimer>
-          <CountdownCircleTimer
-            {...timerProps}
-            colors="#ffd000"
-            duration={minuteSeconds}
-            initialRemainingTime={remainingTime % minuteSeconds}
-            onComplete={(totalElapsedTime) => [remainingTime - totalElapsedTime > 0, 10]}
-          >
-            {({ elapsedTime }) => renderTime('seconds', getTimeSeconds(elapsedTime))}
-          </CountdownCircleTimer>
-        </Layout>
-        
-      </TimerBox>
-        </CardBody>
-      </StyledTimerCard>
-    )
+  const daysDuration = days * daySeconds
+  return (
+    <StyledTimerCard>
+      <CardBody>
+        <Heading size="lg" mb="24px">
+          Presale Staring
+        </Heading>
+        <TimerBox>
+          <Layout>
+            <CountdownCircleTimer
+              {...timerProps}
+              colors="#ffd000"
+              duration={daysDuration}
+              initialRemainingTime={remainingTime}
+            >
+              {({ elapsedTime }) => renderTime('days', getTimeDays(daysDuration - elapsedTime))}
+            </CountdownCircleTimer>
+            <CountdownCircleTimer
+              {...timerProps}
+              colors="#ffd000"
+              duration={daySeconds}
+              initialRemainingTime={remainingTime % daySeconds}
+              onComplete={(totalElapsedTime) => [remainingTime - totalElapsedTime > hourSeconds, 10]}
+            >
+              {({ elapsedTime }) => renderTime('hours', getTimeHours(daySeconds - elapsedTime))}
+            </CountdownCircleTimer>
+            <CountdownCircleTimer
+              {...timerProps}
+              colors="#ffd000"
+              duration={hourSeconds}
+              initialRemainingTime={remainingTime % hourSeconds}
+              onComplete={(totalElapsedTime) => [remainingTime - totalElapsedTime > minuteSeconds, 10]}
+            >
+              {({ elapsedTime }) => renderTime('minutes', getTimeMinutes(hourSeconds - elapsedTime))}
+            </CountdownCircleTimer>
+            <CountdownCircleTimer
+              {...timerProps}
+              colors="#ffd000"
+              duration={minuteSeconds}
+              initialRemainingTime={remainingTime % minuteSeconds}
+              onComplete={(totalElapsedTime) => [remainingTime - totalElapsedTime > 0, 10]}
+            >
+              {({ elapsedTime }) => renderTime('seconds', getTimeSeconds(elapsedTime))}
+            </CountdownCircleTimer>
+          </Layout>
+        </TimerBox>
+      </CardBody>
+    </StyledTimerCard>
+  )
 }
 
 export default HomePageCountdown

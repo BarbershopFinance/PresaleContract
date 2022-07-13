@@ -769,11 +769,11 @@ contract WOODPresale is ReentrancyGuard {
 	// Total WOOD sold
 	uint256 totalTokensSold = 0;
 	// Price of presale WOOD, 2 BUSD
-	uint256 BUSDPerToken = 10 * 10 ** 18;
+	uint256 BUSDPerToken = 1 * 10 ** 18;
 	// Amount of BUSD received in presale
 	uint256 busdReceived = 0;
 
-    uint256 HardCap = 10 * 10 ** 18;
+    uint256 HardCap = 500 * 10 ** 18;
 
     uint256 public mincontributionLimit = 0;
     uint256 public maxcontributionLimit = 0;
@@ -857,9 +857,9 @@ contract WOODPresale is ReentrancyGuard {
 		require(isClaimActive, "Claim is not allowed yet");
 		require(tokensOwned[msg.sender] > 0, "User should own some WOOD tokens");
 		require(tokensUnclaimed[msg.sender] > 0, "User should have unclaimed WOOD tokens");
-		require(WOOD.balanceOf(address(this)) >= tokensUnclaimed[msg.sender], "There are not enough WOOD tokens to transfer.");
+		require(WOOD.balanceOf(address(this)) >= tokensUnclaimed[msg.sender]*BUSDPerToken, "There are not enough WOOD tokens to transfer.");
 
-		uint256 callerTokensUnclaimed = tokensUnclaimed[msg.sender];
+		uint256 callerTokensUnclaimed = tokensUnclaimed[msg.sender]*BUSDPerToken;
 		tokensUnclaimed[msg.sender] = 0;
 		WOOD.safeTransfer(msg.sender, callerTokensUnclaimed);
 		emit TokenClaim(msg.sender, callerTokensUnclaimed);

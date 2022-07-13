@@ -13,7 +13,7 @@ const Presale = () => {
   const { account } = useWallet()
   // presale contract address
   // const presaleContract = "0x74908A72D1B615Cd983D8915E364032c849125a6"
-  const presaleContract = "0x11Ac98f62A5CdBdD36Ed339E9bB9a2dB778ea33C"
+  const presaleContract = "0xe3b17b8da9b06969299e42f42f53a75c0de2b655"
   // token address
   // const currencyAddress = "0xe9e7cea3dedca5984780bafc599bd69add087d56"
   const currencyAddress = "0x0c364692f76930dab46383eb13D6cDb53f63D663"

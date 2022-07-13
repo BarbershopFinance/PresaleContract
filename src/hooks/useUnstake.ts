@@ -21,13 +21,13 @@ const useUnstake = (pid: number) => {
   const handleUnstake = useCallback(
     async (amount: string, decimals: number) => {
       try {
-      const txHash = await unstake(masterChefContract, pid, amount, account, decimals)
-      dispatch(fetchFarmUserDataAsync(account))
-      console.info(txHash)
-      toastSuccess("Success","Unstaking transaction confirmed")
-    } catch (e) {
-      toastError("An error occurred.", `Transaction unsuccessful, please try again`);
-    }
+        const txHash = await unstake(masterChefContract, pid, amount, account, decimals)
+        dispatch(fetchFarmUserDataAsync(account))
+        console.info(txHash)
+        toastSuccess('Success', 'Unstaking transaction confirmed')
+      } catch (e) {
+        toastError('An error occurred.', `Transaction unsuccessful, please try again`)
+      }
     },
     [account, dispatch, masterChefContract, pid, toastSuccess, toastError],
   )
