@@ -286,12 +286,12 @@ const PresaleContribute: React.FC<Props> = ({
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - Maximum Contribution - 100,000 DAI (100,000 LION)
+              - Maximum Contribution - 50,000 DAI (50,000 LION)
             </Text>
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - HardCap - 500,000 DAI (500,000 LION)
+              - HardCap - 300,000 DAI (300,000 LION)
             </Text>
           </RowItem>
         </StyledPreSaleCard>
