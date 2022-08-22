@@ -63,7 +63,7 @@ const BalanceInput: React.FC<Props> = ({ max, symbol, onChange, onSelectMax, val
         placeholder="0"
         value={value}
       />
-      <StyledMaxText>{TranslateString(454, `${max.toLocaleString()} BUSD Available`)}</StyledMaxText>
+      <StyledMaxText>{TranslateString(454, `${max.toLocaleString()} DAI Available`)}</StyledMaxText>
     </div>
   )
 }

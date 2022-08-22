@@ -90,13 +90,13 @@ const PresaleContribute: React.FC<Props> = ({
     const fetchV = async () => {
       const _claimed = await contract.methods.claimActive().call()
       const _active = await contract.methods.saleActive().call()
-      const _total = await contract.methods.getWOODTokensLeft().call()
+      const _total = await contract.methods.getLIONTokensLeft().call()
       
       const _totalSoldToken = await contract.methods.getTotalTokensSold().call()
       console.log('debug->_totalSoldToken', _totalSoldToken)
       console.log('debug->_total', _total/1e18)
 
-      const _leftToken = new BigNumber(_total/1e18).minus(_totalSoldToken)
+      const _leftToken = new BigNumber(_total).minus(_totalSoldToken)
       console.log('debug->_leftToken', _leftToken.toString())
       setClaimed(_claimed)
       setActive(_active)
@@ -111,12 +111,12 @@ const PresaleContribute: React.FC<Props> = ({
       const _claimed = await contract.methods.claimActive().call()
       const _amount = await contract.methods.getTokensOwned(account).call()
       const _active = await contract.methods.saleActive().call()
-      const _total = await contract.methods.getWOODTokensLeft().call()
+      const _total = await contract.methods.getLIONTokensLeft().call()
 
       const _unclaimToken = await contract.methods.getTokensUnclaimed(account).call()
       const _ownToken = await contract.methods.getTokensOwned(account).call()
       const _totalSoldToken = await contract.methods.getTotalTokensSold().call()
-      const _leftToken = new BigNumber(_total/1e18).minus(new BigNumber(_totalSoldToken))
+      const _leftToken = new BigNumber(_total).minus(new BigNumber(_totalSoldToken))
 
       console.log('debug->_total', _leftToken, _ownToken, _totalSoldToken, _total)
 
@@ -186,7 +186,7 @@ const PresaleContribute: React.FC<Props> = ({
             <LabelButton
               disabled={pendingTx || !(isActive || isFinished)}
               buttonLabel="Contribute"
-              label={isFinished ? 'Your tokens to claim' : `Your contribution (WOOD)`}
+              label={isFinished ? 'Your tokens to claim' : `Your contribution (LION)`}
               value={
                 // eslint-disable-next-line no-nested-ternary
                 isFinished
@@ -210,7 +210,7 @@ const PresaleContribute: React.FC<Props> = ({
             <LabelButton
               disabled={pendingTx || unclaimToken <= new BigNumber(0) || !(isActive || isFinished)}
               buttonLabel="Claim"
-              label="Your tokens to claim (WOOD)"
+              label="Your tokens to claim (LION)"
               value={
                 // eslint-disable-next-line no-nested-ternary
                 isFinished
@@ -231,29 +231,29 @@ const PresaleContribute: React.FC<Props> = ({
           </Heading>
           <hr />
           <RowItem>
-            <Text color="#ddd" mr="16px">Purchased WOOD:</Text>
+            <Text color="#ddd" mr="16px">Purchased LION:</Text>
             <CardValue value={getBalance(ownToken)} decimals={0} fontSize="16px"/>
           </RowItem>
           <RowItem>
-            <Text color="#ddd" mr="16px">Unclaimed WOOD:</Text>
+            <Text color="#ddd" mr="16px">Unclaimed LION:</Text>
             <CardValue value={getBalance(unclaimToken)} decimals={0} fontSize="16px" />
           </RowItem>
           <hr />
           <RowItem>
-            <Text color="#ddd" mr="16px">Total WOOD:</Text>
+            <Text color="#ddd" mr="16px">Total LION:</Text>
             <CardValue value={getBalanceNumber(total, 18)} decimals={0} fontSize="16px" />
           </RowItem>
           <RowItem>
-            <Text color="#ddd" mr="16px">Total WOOD Sold:</Text>
+            <Text color="#ddd" mr="16px">Total LION Sold:</Text>
             <CardValue value={getBalance(totalSoldToken)} decimals={0} fontSize="16px" />
           </RowItem>
           <hr />
-          <RowItem>
+          {/* <RowItem>
             <Text color="#ddd" mr="16px">
-              WOOD Left:
+              LION Left:
             </Text>
             <CardValue value={getBalance(leftToken)} decimals={0} fontSize="18px" />
-          </RowItem>
+          </RowItem> */}
         </StyledPreSaleCard>
         <Spacer size="sm" />
         <StyledPreSaleCard>
@@ -262,36 +262,36 @@ const PresaleContribute: React.FC<Props> = ({
           </Heading>
           <RowItem>
             <Text color="#ddd" fontSize="18px" mr="16px">
-              WOOD Presale Price:{' '}
+              LION Presale Price:{' '}
             </Text>
             <CardValue fontSize="18px" value={1} decimals={2} prefix="$" />
           </RowItem>
           {/* <RowItem>
             <Text color="#ddd" fontSize="18px" mr="16px">
-              - WOOD Presale Price:{' '}
+              - LION Presale Price:{' '}
             </Text>
             <CardValue fontSize="18px" value={7} decimals={2} prefix="$" />
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="18px" mr="16px">
-              - WOOD Launch Price:{' '}
+              - LION Launch Price:{' '}
             </Text>
             <CardValue fontSize="18px" value={10} decimals={2} prefix="$" />
           </RowItem> */}
 
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - Minimum Contribution - 1 BUSD (1 WOOD)
+              - Minimum Contribution - 1 DAI(1 LION)
             </Text>
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - Maximum Contribution - 100,000 BUSD (100,000 WOOD)
+              - Maximum Contribution - 100,000 DAI (100,000 LION)
             </Text>
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - HardCap - 500,000 BUSD (500,000 WOOD)
+              - HardCap - 500,000 DAI (500,000 LION)
             </Text>
           </RowItem>
         </StyledPreSaleCard>

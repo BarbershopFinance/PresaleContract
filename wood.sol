@@ -1,4 +1,20 @@
 // SPDX-License-Identifier: MIT
+                                                                                        
+/***
+ *     ██▀███   ▒█████   ▄▄▄       ██▀███   ██▓ ███▄    █   ▄████  ██▓     ██▓ ▒█████   ███▄    █ 
+ *    ▓██ ▒ ██▒▒██▒  ██▒▒████▄    ▓██ ▒ ██▒▓██▒ ██ ▀█   █  ██▒ ▀█▒▓██▒    ▓██▒▒██▒  ██▒ ██ ▀█   █ 
+ *    ▓██ ░▄█ ▒▒██░  ██▒▒██  ▀█▄  ▓██ ░▄█ ▒▒██▒▓██  ▀█ ██▒▒██░▄▄▄░▒██░    ▒██▒▒██░  ██▒▓██  ▀█ ██▒
+ *    ▒██▀▀█▄  ▒██   ██░░██▄▄▄▄██ ▒██▀▀█▄  ░██░▓██▒  ▐▌██▒░▓█  ██▓▒██░    ░██░▒██   ██░▓██▒  ▐▌██▒
+ *    ░██▓ ▒██▒░ ████▓▒░ ▓█   ▓██▒░██▓ ▒██▒░██░▒██░   ▓██░░▒▓███▀▒░██████▒░██░░ ████▓▒░▒██░   ▓██░
+ *    ░ ▒▓ ░▒▓░░ ▒░▒░▒░  ▒▒   ▓▒█░░ ▒▓ ░▒▓░░▓  ░ ▒░   ▒ ▒  ░▒   ▒ ░ ▒░▓  ░░▓  ░ ▒░▒░▒░ ░ ▒░   ▒ ▒ 
+ *      ░▒ ░ ▒░  ░ ▒ ▒░   ▒   ▒▒ ░  ░▒ ░ ▒░ ▒ ░░ ░░   ░ ▒░  ░   ░ ░ ░ ▒  ░ ▒ ░  ░ ▒ ▒░ ░ ░░   ░ ▒░
+ *      ░░   ░ ░ ░ ░ ▒    ░   ▒     ░░   ░  ▒ ░   ░   ░ ░ ░ ░   ░   ░ ░    ▒ ░░ ░ ░ ▒     ░   ░ ░ 
+ *       ░         ░ ░        ░  ░   ░      ░           ░       ░     ░  ░ ░      ░ ░           ░ 
+ *  
+ *  https://www.roaringlion.xyz/
+ */
+
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -749,7 +765,7 @@ library SafeBEP20 {
 
 pragma solidity 0.6.12;
 
-contract WOODPresale is ReentrancyGuard {
+contract LIONPresale is ReentrancyGuard {
 	using SafeMath for uint256;
 	using SafeBEP20 for IBEP20;
 	// Maps user to the number of tokens owned
@@ -757,23 +773,23 @@ contract WOODPresale is ReentrancyGuard {
 	// The number of unclaimed tokens the user has
 	mapping(address => uint256) public tokensUnclaimed;
 
-	// WOOD token
-	IBEP20 public WOOD;
-	// BUSD token
-	IBEP20 public BUSD;
+	// LION token
+	IBEP20 public LION;
+	// DAI token
+	IBEP20 public DAI;
 
 	// Sale active
 	bool isSaleActive;
 	// Claim active
 	bool isClaimActive;
-	// Total WOOD sold
+	// Total LION sold
 	uint256 totalTokensSold = 0;
-	// Price of presale WOOD, 2 BUSD
-	uint256 BUSDPerToken = 1 * 10 ** 18;
-	// Amount of BUSD received in presale
+	// Price of presale LION, 2 DAI
+	uint256 DAIPerToken = 1;
+	// Amount of DAI received in presale
 	uint256 busdReceived = 0;
 
-    uint256 HardCap = 500 * 10 ** 18;
+    uint256 HardCap = 10 * 10 ** 18; // $10
 
     uint256 public mincontributionLimit = 0;
     uint256 public maxcontributionLimit = 0;
@@ -782,17 +798,17 @@ contract WOODPresale is ReentrancyGuard {
 	event TokenClaim(address user, uint256 tokens);
 
 	constructor(
-		address _WOOD,
-		address _BUSD
+		address _LION,
+		address _DAI
 	) public {
-		WOOD = IBEP20(_WOOD);
-		BUSD = IBEP20(_BUSD);
+		LION = IBEP20(_LION);
+		DAI = IBEP20(_DAI);
 		isSaleActive;
 		// owner = msg.sender;
     }
 
     function setBusdPerToken(uint256 _busdPerToken) public onlyOwner{
-        BUSDPerToken = _busdPerToken;
+        DAIPerToken = _busdPerToken;
     }
 
 	function buy(uint256 _amount) public nonReentrant {
@@ -800,13 +816,13 @@ contract WOODPresale is ReentrancyGuard {
 		require (busdReceived + _amount <= HardCap, "presale hardcap reached");
         require(_amount >= mincontributionLimit, "low amount than min");
         
-        require(_amount + (tokensOwned[msg.sender] * BUSDPerToken) <= maxcontributionLimit, "high amount than max");
+        require(_amount + (tokensOwned[msg.sender] * DAIPerToken) <= maxcontributionLimit, "high amount than max");
         
         
 		address _buyer = msg.sender;
-		uint256 tokens = _amount.div(BUSDPerToken);   
+		uint256 tokens = _amount.div(DAIPerToken);   
 
-		BUSD.safeTransferFrom(msg.sender, address(this), _amount);
+		DAI.safeTransferFrom(msg.sender, address(this), _amount);
 
 		tokensOwned[_buyer] = tokensOwned[_buyer].add(tokens);
 		tokensUnclaimed[_buyer] = tokensUnclaimed[_buyer].add(tokens);
@@ -849,33 +865,33 @@ contract WOODPresale is ReentrancyGuard {
 		return tokensUnclaimed[_user];
 	}
 
-	function getWOODTokensLeft() external view returns (uint256) {
-		return WOOD.balanceOf(address(this));
+	function getLIONTokensLeft() external view returns (uint256) {
+		return LION.balanceOf(address(this));
 	}
 
 	function claimTokens() external nonReentrant {
 		require(isClaimActive, "Claim is not allowed yet");
-		require(tokensOwned[msg.sender] > 0, "User should own some WOOD tokens");
-		require(tokensUnclaimed[msg.sender] > 0, "User should have unclaimed WOOD tokens");
-		require(WOOD.balanceOf(address(this)) >= tokensUnclaimed[msg.sender]*BUSDPerToken, "There are not enough WOOD tokens to transfer.");
+		require(tokensOwned[msg.sender] > 0, "User should own some LION tokens");
+		require(tokensUnclaimed[msg.sender] > 0, "User should have unclaimed LION tokens");
+		require(LION.balanceOf(address(this)) >= tokensUnclaimed[msg.sender], "There are not enough LION tokens to transfer.");
 
-		uint256 callerTokensUnclaimed = tokensUnclaimed[msg.sender]*BUSDPerToken;
+		uint256 callerTokensUnclaimed = tokensUnclaimed[msg.sender];
 		tokensUnclaimed[msg.sender] = 0;
-		WOOD.safeTransfer(msg.sender, callerTokensUnclaimed);
+		LION.safeTransfer(msg.sender, callerTokensUnclaimed);
 		emit TokenClaim(msg.sender, callerTokensUnclaimed);
 	}
 
 	function withdrawFunds() external onlyOwner {
-		BUSD.safeTransfer(msg.sender, BUSD.balanceOf(address(this)));
+		DAI.safeTransfer(msg.sender, DAI.balanceOf(address(this)));
 	}
 
-	function withdrawUnsoldWOOD() external onlyOwner {
-		uint256 amount = WOOD.balanceOf(address(this)) - totalTokensSold;
-		WOOD.safeTransfer(msg.sender, amount);
+	function withdrawUnsoldLION() external onlyOwner {
+		uint256 amount = LION.balanceOf(address(this)) - totalTokensSold;
+		LION.safeTransfer(msg.sender, amount);
 	}
 
-	function withdrawAllWOOD() external onlyOwner {
-		WOOD.safeTransfer(msg.sender, WOOD.balanceOf(address(this)));
+	function withdrawAllLION() external onlyOwner {
+		LION.safeTransfer(msg.sender, LION.balanceOf(address(this)));
 	}
     
 }

@@ -7,7 +7,7 @@ export const getBalanceNumber = (balance: BigNumber, decimals = 18) => {
 }
 
 export const getBalance = (balance: BigNumber) => {
-  const displayBalance = new BigNumber(balance)
+  const displayBalance = new BigNumber(balance).dividedBy(new BigNumber(10).pow(18))
 
   return displayBalance.toNumber()
 }

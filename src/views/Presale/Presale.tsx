@@ -12,9 +12,9 @@ import Divider from './components/Divider'
 const Presale = () => {
   const { account } = useWallet()
   // presale contract address
-  const presaleContract = "0xe3b17b8da9b06969299e42f42f53a75c0de2b655"
+  const presaleContract = "0x9bdb78fbeaedf543ac7c6682972da444de970804"
   // token address BUSD
-  const currencyAddress = "0xe9e7cea3dedca5984780bafc599bd69add087d56"
+  const currencyAddress = "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3"
   const contract = usePreSaleContract(presaleContract)
 
   const BackgroundImage = createGlobalStyle`
@@ -37,7 +37,7 @@ const Presale = () => {
       <Divider />
       <PresaleContribute
         address = {presaleContract}
-        currency = "BUSD"
+        currency = "DAI"
         currencyAddress = {currencyAddress}
         tokenDecimals = {18}
         contract = {contract}
