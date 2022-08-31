@@ -294,6 +294,11 @@ const PresaleContribute: React.FC<Props> = ({
               - HardCap - 300,000 DAI (300,000 LION)
             </Text>
           </RowItem>
+          <RowItem>
+            <Text color="#ddd" fontSize="15px" mr="16px">
+            Contract Address - 0x9bdb78fbeaedf543ac7c6682972da444de970804
+            </Text>
+          </RowItem>
         </StyledPreSaleCard>
       </Row>
     </>
