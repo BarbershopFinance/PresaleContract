@@ -12,7 +12,7 @@ import Divider from './components/Divider'
 const Presale = () => {
   const { account } = useWallet()
   // presale contract address
-  const presaleContract = "0x9bdb78fbeaedf543ac7c6682972da444de970804"
+  const presaleContract = "0xdfC9A3AeBEf8889393F36d473119775Dcc02dbba"
   // token address BUSD
   const currencyAddress = "0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3"
   const contract = usePreSaleContract(presaleContract)

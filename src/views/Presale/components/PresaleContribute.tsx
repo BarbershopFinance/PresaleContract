@@ -284,19 +284,19 @@ const PresaleContribute: React.FC<Props> = ({
               - Minimum Contribution - 1 DAI(1 LION)
             </Text>
           </RowItem>
-          <RowItem>
+          {/* <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
               - Maximum Contribution - 50,000 DAI (50,000 LION)
             </Text>
-          </RowItem>
+          </RowItem> */}
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-              - HardCap - 300,000 DAI (300,000 LION)
+              - HardCap - 30,000 DAI (30,000 LION)
             </Text>
           </RowItem>
           <RowItem>
             <Text color="#ddd" fontSize="15px" mr="16px">
-            Contract Address - 0x9bdb78fbeaedf543ac7c6682972da444de970804
+            Contract Address - 0xdfC9A3AeBEf8889393F36d473119775Dcc02dbba
             </Text>
           </RowItem>
         </StyledPreSaleCard>
