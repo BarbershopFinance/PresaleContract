@@ -258,11 +258,11 @@ const PresaleContribute: React.FC<Props> = ({
         <Spacer size="sm" />
         <StyledPreSaleCard>
           <Heading color="#ddd" size="lg" mb="24px" style={{ textAlign: 'center' }}>
-            PreSale{' '}
+            MINT{' '}
           </Heading>
           <RowItem>
             <Text color="#ddd" fontSize="18px" mr="16px">
-              LION Presale Price:{' '}
+              LION MINT Price:{' '}
             </Text>
             <CardValue fontSize="18px" value={1} decimals={2} prefix="$" />
           </RowItem>
